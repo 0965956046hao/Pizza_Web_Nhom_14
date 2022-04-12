@@ -1,0 +1,198 @@
+﻿@model IEnumerable<WebPizza.Models.GioHang>
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/Content/cart/Css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Time</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/shop-homepage.css" />
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="~/css/Style.css">
+</head>
+<body>
+    <header class="header" style="background-color: #ee9c9c">
+
+        <a href="@Url.Action("Index","TrangChu")" class="logo"><i class="fas fa-utensils"></i>PIZZA FOR LIFE</a>
+
+        <div id="menu-bar" class="fas fa-bars" ></div>
+        <nav class="navbar" >
+            @using WebPizza.Models
+            @if (Session["TaiKhoan"] == null)
+            {
+                <a href="#order" >
+                    @Html.ActionLink("Đăng Nhập", "DangNhap", "KhachHang")
+                </a>
+            }
+            else
+            {
+                DangNhap kh = (DangNhap)Session["Taikhoan"];
+                <a href="#order">
+                    @Html.ActionLink(kh.KhachHang.TenKH.ToString(), "info", "KhachHang")
+                </a>
+            }
+            <a href="#order">
+                @Html.ActionLink("Giỏ Hàng", "GioHang", "GioHang")
+            </a>
+        </nav>
+    </header>
+    <div class="container px-3 my-5 clearfix">
+        <!-- Shopping cart table -->
+        <div class="card">
+            <div class="card-header">
+                <h2> GIỎ HÀNG </h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <!-- Set columns width -->
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tenbanh)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.hinh)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.giaban)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.soluong)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.vien)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.de)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.size)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.phanthem)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.thanhtien)
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            @{int i = 0;}
+                            @foreach (var item in Model)
+                            {
+                                <span style="color:white">@i</span>
+                                <tr>
+                                    <td> @Html.DisplayFor(modelItem => item.tenbanh) </td>
+                                    <td> <img src="~/Content/hinhsanpham/@item.hinh" width="100" height="100" /> </td>
+                                    @using (Html.BeginForm("CapnhatGiohang", "GioHang", new { @id = i }))
+                                    {
+                                        <td> @string.Format("{0:0,0}", item.giaban) VNĐ </td>
+                                        <td><input type="number" min="1" name="txtSoLg" value="@item.soluong" style="width:70px; text-align:center" /></td>
+                                        <td> @Html.DropDownList("vien", new SelectList(item.ListVien, "MaV", "TenVien"), htmlAttributes: new { @class = "form-control" })</td>
+                                        <td> @Html.DropDownList("de", new SelectList(item.ListDe, "MaD", "TenDeBanh"), htmlAttributes: new { @class = "form-control" })</td>
+                                        <td> @Html.DropDownList("size", new SelectList(item.ListSize, "MaS", "LoaiSize"), htmlAttributes: new { @class = "form-control" })</td>
+                                        <td> @Html.DropDownList("them", new SelectList(item.ListThem, "MaPT", "TenPT"), htmlAttributes: new { @class = "form-control" })</td>
+                                        <td> @Html.DisplayFor(modelItem => item.thanhtien) VND </td>
+                                        <td> <input type="submit" value="Cập nhật" class="btn btn-success" /></td>
+                                        <td>
+                                            <a class="btn btn-success" href="@Url.Action("XoaGiohang","GioHang", new { @id = i , @strURL = Request.Url.ToString()})"> Xóa </a>
+                                        </td>
+                                    }
+
+                                </tr>
+                                @(i++);
+                            }
+                        </thead>
+                    </table>
+                </div>
+                <!-- / Shopping cart table -->
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+
+                    <div class="d-flex">
+                        <div class="text-right mt-4 mr-5">
+                            <label class="text-muted font-weight-normal m-0">Số Loại</label>
+                            <div class="text-large"><strong>@ViewBag.Tongsoluongsanpham</strong></div>
+                        </div>
+                        <div class="text-right mt-4 mr-5">
+                            <label class="text-muted font-weight-normal m-0">Số Lượng</label>
+                            <div class="text-large"><strong>@ViewBag.Tongsoluong</strong></div>
+                        </div>
+                        <div class="text-right mt-4">
+                            <label class="text-muted font-weight-normal m-0">Tổng Tiền</label>
+                            <div class="text-large"><strong>@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="float-right">
+                    <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3" style="background-color: #fc6">
+                        <td colspan="5">
+                            @Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang")
+                        </td>
+                    </button>
+                    <button type="button" class="btn btn-lg btn-primary mt-2">
+                        <td colspan="5">
+                            @Html.ActionLink("Đặt hàng", "Dathang", "GioHang")
+                        </td>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<style>
+    a {
+        color: red;
+    }
+
+    .btn-primary {
+        background-color: #fc6;
+        border: none;
+    }
+
+    .d-flex {
+        margin-left: auto;
+    }
+
+    .h2, h2 {
+        text-align: center;
+    }
+
+    .form-control {
+        width: auto;
+    }
+
+    body {
+        background-image:url('../../Content/images/2.jpg') ;
+    }
+
+    .table-bordered thead td, .table-bordered thead th {
+        text-align: center;
+    }
+
+    .table-responsive {
+        color: white;
+    }
+</style>

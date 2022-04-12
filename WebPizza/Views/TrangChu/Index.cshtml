@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebPizza.Models.BanhPizza>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<div class="box-container">
+    @foreach (var pizza in Model)
+    {
+
+        <div class="box">
+            <img alt="@pizza.TenBanh" src="~/Content/hinhsanpham/@pizza.Image" style="width:200" />
+            <div class="content">
+                <h4 style="text-align:center">
+                    @pizza.TenBanh
+                    <br />
+                    <br />
+                    @pizza.MoTa
+                </h4>
+                <p><button type="button" class="ajax-add-to-cart btn" data-id="@pizza.MaBanh">@pizza.DonGia VND</button></p>
+            </div>
+        </div>
+
+    }
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function () {
+            $(".ajax-add-to-cart").click(function () {
+                $.ajax({
+                    url: "/GioHang/ThemGioHang",
+                    data: {
+                        id: $(this).data("id"),
+                        type: "ajax"
+                    },
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thêm giỏ hàng thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thêm giỏ hàng thất bại',
+                            text: 'Vui lòng thử lại',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+
+<style>
+    h4 {
+        margin-top: -35px;
+    }
+</style>
+
+

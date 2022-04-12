@@ -1,0 +1,97 @@
+﻿@model WebPizza.Models.KhachHang
+
+@{
+
+    Layout = null;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>RegistrationForm_v9 by Colorlib</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- LINEARICONS -->
+        <link rel="stylesheet" href="~/Content/Sign-up/fonts/linearicons/style.css">
+
+        <!-- MATERIAL DESIGN ICONIC FONT -->
+        <link rel="stylesheet" href="~/Content/Sign-up/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+
+        <!-- DATE-PICKER -->
+        <link rel="stylesheet" href="~/Content/Sign-up/vendor/date-picker/css/datepicker.min.css">
+
+        <!-- STYLE CSS -->
+        <link rel="stylesheet" href="~/Content/Sign-up/css/style.css">
+    </head>
+
+    <body>
+
+        <div class="wrapper">
+            <div class="inner">
+                <form action="">
+                    <h3>SIGN_UP</h3>
+                    <div class="form-row">
+                        <div class="form-wrapper">
+                            <label for="">Name *</label>
+                            <input type="text" class="form-control" name="TenKH" placeholder="Your Name">
+                            @ViewData["Loi1"]
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="">Phone *</label>
+                            <input type="text" class="form-control" name="SDT" placeholder="Phone">
+                            @ViewData["Loi3"]
+                            @ViewData["Loi7"]
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-wrapper">
+                            <label for="">Địa Chỉ  *</label>
+                            <input type="text" class="form-control" name="DiaChi" placeholder="Address">
+                            @ViewData["Loi2"]
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="">Tên Đăng Nhập  *</label>
+                            <input type="text" class="form-control" name="DangNhap.UseName" placeholder="Tên Đăng Nhập">
+                            @ViewData["Loi4"]
+                        </div>
+                    </div>
+                    <div class="form-row last">
+                        <div class="form-wrapper">
+                            <label for="">Mật Khẩu  *</label>
+                            <input type="text" class="form-control" name="DangNhap.Password" placeholder="Passsword">
+                            @ViewData["Loi5"]
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="">Xác Nhận Mật Khẩu   *</label>
+                            <input type="text" class="form-control" name="MatKhauXacNhan" placeholder="Password">
+                            @ViewData["Loi6"]
+                        </div>
+                    </div>
+                    <div class="form-row last">
+                        <button data-text="SIGN_UP">
+                            <span>sign_up</span>
+                        </button>
+                        <button type="button" onclick="location.href='@Url.Action("DangNhap","KhachHang")'">
+                            Sign
+                        </button>
+                    </div>
+                    <div class="form-row last" style="margin:auto"> @ViewData["MatKhauGiongNhau"]</div>
+                </form>
+            </div>
+        </div>
+
+        <script src="~/Content/Sign-up/js/jquery-3.3.1.min.js"></script>
+
+        <!-- DATE-PICKER -->
+        <script src="~/Content/Sign-up/vendor/date-picker/js/datepicker.js"></script>
+        <script src="~/Content/Sign-up/vendor/date-picker/js/datepicker.en.js"></script>
+
+        <script src="~/Content/js/main.js"></script>
+    </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+}

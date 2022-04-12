@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PizzaWeb" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=PizzaWeb;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PizzaWebConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BanhPizza" Member="BanhPizzas">
+    <Type Name="BanhPizza">
+      <Column Name="MaBanh" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenBanh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MoTa" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DonGia" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="BanhPizza_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaBanh" OtherKey="MaBanh" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Size" Member="Sizes">
+    <Type Name="Size">
+      <Column Name="MaS" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LoaiSize" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GTS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Size_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaS" OtherKey="MaS" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CTKhuyenMai" Member="CTKhuyenMais">
+    <Type Name="CTKhuyenMai">
+      <Column Name="MaGG" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PTGiam" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="CTKhuyenMai_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaGG" OtherKey="MaGG" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ChiTietHoaDon" Member="ChiTietHoaDons">
+    <Type Name="ChiTietHoaDon">
+      <Column Name="SoLuong" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TongGia" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="MaHD" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaBanh" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaS" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaPT" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaD" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaGG" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="BanhPizza_ChiTietHoaDon" Member="BanhPizza" ThisKey="MaBanh" OtherKey="MaBanh" Type="BanhPizza" IsForeignKey="true" />
+      <Association Name="CTKhuyenMai_ChiTietHoaDon" Member="CTKhuyenMai" ThisKey="MaGG" OtherKey="MaGG" Type="CTKhuyenMai" IsForeignKey="true" />
+      <Association Name="Size_ChiTietHoaDon" Member="Size" ThisKey="MaS" OtherKey="MaS" Type="Size" IsForeignKey="true" />
+      <Association Name="HoaDon_ChiTietHoaDon" Member="HoaDon" ThisKey="MaHD" OtherKey="MaHD" Type="HoaDon" IsForeignKey="true" />
+      <Association Name="LoaiDe_ChiTietHoaDon" Member="LoaiDe" ThisKey="MaD" OtherKey="MaD" Type="LoaiDe" IsForeignKey="true" />
+      <Association Name="LoaiVien_ChiTietHoaDon" Member="LoaiVien" ThisKey="MaV" OtherKey="MaV" Type="LoaiVien" IsForeignKey="true" />
+      <Association Name="PhanThem_ChiTietHoaDon" Member="PhanThem" ThisKey="MaPT" OtherKey="MaPT" Type="PhanThem" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DangNhap" Member="DangNhaps">
+    <Type Name="DangNhap">
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UseName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="KhachHang_DangNhap" Member="KhachHang" ThisKey="MaKH" OtherKey="MaKH" Type="KhachHang" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDon" Member="HoaDons">
+    <Type Name="HoaDon">
+      <Column Name="MaHD" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ThanhToan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TongTien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="HoaDon_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaHD" OtherKey="MaHD" Type="ChiTietHoaDon" />
+      <Association Name="KhachHang_HoaDon" Member="KhachHang" ThisKey="MaKH" OtherKey="MaKH" Type="KhachHang" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KhachHang" Member="KhachHangs">
+    <Type Name="KhachHang">
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="KhachHang_DangNhap" Member="DangNhap" ThisKey="MaKH" OtherKey="MaKH" Type="DangNhap" Cardinality="One" />
+      <Association Name="KhachHang_HoaDon" Member="HoaDons" ThisKey="MaKH" OtherKey="MaKH" Type="HoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiDe" Member="LoaiDes">
+    <Type Name="LoaiDe">
+      <Column Name="MaD" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenDeBanh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GTDB" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="LoaiDe_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaD" OtherKey="MaD" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiVien" Member="LoaiViens">
+    <Type Name="LoaiVien">
+      <Column Name="MaV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenVien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GTV" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="LoaiVien_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaV" OtherKey="MaV" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhanThem" Member="PhanThems">
+    <Type Name="PhanThem">
+      <Column Name="MaPT" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenPT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GTPhanThem" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="PhanThem_ChiTietHoaDon" Member="ChiTietHoaDons" ThisKey="MaPT" OtherKey="MaPT" Type="ChiTietHoaDon" />
+    </Type>
+  </Table>
+</Database>
